@@ -93,7 +93,7 @@
                                                     <a href="{% url "recipe:update_ingrediants" recipe.id i.id  %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                                 </td>
                                                 <td class="px-6 py-4 text-right">
-                                                    <a href="{% url 'recipe:delete_ingrediants' recipe.id  i.id %}" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Delete</a>
+                                                    <a href="{% url 'recipe:delete_ingrediants' id_of_recipe=recipe.id id=i.id %}" class="font-medium text-blue-600 dark:text-red-500 hover:underline">Delete</a>
                                                 </td>
                                             {% endif %}
                                         </tr>
@@ -101,6 +101,15 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        {% else %}
+
+                            {% if request.user == recipe.created_by %}
+                            <td class="px-6 py-4 text-right">
+                                <a href="{% url "recipe:create_ingrediants" recipe.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ADD</a>
+                            </td>
+                            
+                            {% endif %}
                     {% endif %}
                 </div>
 
@@ -153,6 +162,13 @@
                                 </tbody>
                             </table>
                         </div> 
+
+                        {% else %}
+                            {% if request.user == recipe.created_by %}
+                                <td class="px-6 py-4 text-right">
+                                    <a href="{% url "recipe:create_instruction" recipe.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ADD</a>
+                                </td>
+                            {% endif %}
                     {% endif %}
                 </div>
             </div>

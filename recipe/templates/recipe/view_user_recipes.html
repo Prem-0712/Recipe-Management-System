@@ -5,6 +5,8 @@
 
 <h1>my recipes</h1>
 
+<h1><a href="{% url 'recipe:create_recipe' %}">add recipe</a></h1>
+
 <div class='flex flex-wrap'>
             {% for recipe in recipes %}
                 <div class="w-full max-w-sm m-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">

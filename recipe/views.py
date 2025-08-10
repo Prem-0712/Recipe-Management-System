@@ -27,7 +27,7 @@ def view_recipes(request):
 
 @login_required
 def view_recipe_detail(request, id_of_recipe):
-    recipe = get_object_or_404(RecipeModel, pk = id_of_recipe, created_by = request.user)
+    recipe = get_object_or_404(RecipeModel, pk = id_of_recipe)
     ingrediants = IngrediantsModel.objects.filter(recipe_id = id_of_recipe)
     instructions = InstructionModel.objects.filter(recipe_id = id_of_recipe)
     return render(request, 'recipe/view_recipe_detail.html', {'recipe': recipe, 'ing': ingrediants, 'ins': instructions})
@@ -124,27 +124,22 @@ def delete_ingrediants(request, id, id_of_recipe):
     ingrediant = get_object_or_404(IngrediantsModel, pk=id, recipe=recipe)
     ingrediant.delete()
     messages.success(request, 'Ingrediant deleted successfully..')
-    return redirect('recipe:view_recipe_detail', id=id_of_recipe)
+    return redirect('recipe:view_recipe_detail', id_of_recipe=id_of_recipe)
 
 @login_required
 def create_instructions(request, id_of_recipe):
-
-    recipe = get_object_or_404(RecipeModel, pk = id_of_recipe ,created_by = request.user)
+    recipe = get_object_or_404(RecipeModel, pk=id_of_recipe, created_by=request.user)
     
-    if (request.method == 'POST'):
-        
+    if request.method == 'POST':
         form = InstructionForm(request.POST)
-
-        if (form.is_valid()):
+        if form.is_valid():
             instruction = form.save(commit=False)
             instruction.recipe = recipe
             instruction.save()
-            messages.success(request, 'Instructions created succesfully...')
-            return redirect('home')
-        
+            messages.success(request, 'Instructions created successfully...')
+            return redirect('create_instructions', id_of_recipe=recipe.pk) 
         else:
-            messages.error(request, 'Failed to create instructionss...')
-
+            messages.error(request, 'Failed to create instructions...')
     else:
         form = InstructionForm()
 
