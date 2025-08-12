@@ -137,7 +137,7 @@ def create_instructions(request, id_of_recipe):
             instruction.recipe = recipe
             instruction.save()
             messages.success(request, 'Instructions created successfully...')
-            return redirect('create_instructions', id_of_recipe=recipe.pk) 
+            return redirect('recipe:create_instruction', id_of_recipe=recipe.pk) 
         else:
             messages.error(request, 'Failed to create instructions...')
     else:
