@@ -22,8 +22,8 @@ def login(request):
             return redirect('home')
         
         else:
-            messages.error(request, 'Credentials does not match..')
-            return redirect('login')
+             messages.error(request, "passwords don't match", extra_tags='confirm_password')
+             return redirect('register')
 
     return render(request, 'core/login.html')
 
@@ -39,12 +39,12 @@ def register(request):
 
         if (password == confirm_password):
             
-            if User.objects.filter(email = email).exists():
-                messages.error(request, 'The email is already taken')
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'The email is already taken', extra_tags="email")
                 return redirect("register")
             
-            elif User.objects.filter(username = username).exists():
-                messages.error(request, 'The username is already taken')
+            elif User.objects.filter(username=username).exists():
+                messages.error(request, 'The username is already taken', extra_tags="username")
                 return redirect('register')
             
             else:
@@ -62,7 +62,7 @@ def register(request):
 
 
         else:
-            messages.error(request, "The password's doesn't match")
+            messages.error(request, "The password's doesn't match", extra_tags="confirm_password")
             return redirect('register')
 
     return render(request, 'core/register.html')

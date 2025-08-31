@@ -90,6 +90,9 @@
                                             </th>
                                             {% if request.user == recipe.created_by %}
                                                 <td class="px-6 py-4 text-right">
+                                                    <a href="{% url "recipe:create_ingrediants" recipe.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ADD</a>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
                                                     <a href="{% url "recipe:update_ingrediants" recipe.id i.id  %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                                 </td>
                                                 <td class="px-6 py-4 text-right">
